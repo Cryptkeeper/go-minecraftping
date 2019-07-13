@@ -26,6 +26,8 @@ const (
 // It contains only it's length (1) and the packet's ID (0).
 var requestPacket = []byte{1, 0}
 
+// Response is a representation of the Minecraft Java Edition server's ping response.
+// More information: https://wiki.vg/Server_List_Ping#Response
 type Response struct {
 	Version struct {
 		Name     string `json:"name"`
@@ -38,11 +40,14 @@ type Response struct {
 			Name string `json:"name"`
 			Id   string `json:"id"`
 		} `json:"sample"`
-	}
+	} `json:"players"`
 	Description json.RawMessage `json:"description"`
 	Favicon     string          `json:"favicon"`
 }
 
+// Ping connects and pings the Minecraft Java Edition server at the specified address and port.
+// protocolVersion dictates which protocol version to attempt the ping with as the response is protocol version dependent.
+// More information: https://wiki.vg/Server_List_Ping
 func Ping(address string, port uint16, protocolVersion int, timeout time.Duration) (Response, error) {
 	var resp Response
 
@@ -58,7 +63,7 @@ func Ping(address string, port uint16, protocolVersion int, timeout time.Duratio
 		return resp, err
 	}
 
-	// Construct and write Handshake packet to open connection and then write Request packet
+	// Construct and write Handshake packet to open connection and then write Request packet.
 	// More information: https://wiki.vg/Server_List_Ping
 	handshake := makeHandshakePacket(address, port, protocolVersion)
 	conn.Write(handshake)
@@ -67,13 +72,13 @@ func Ping(address string, port uint16, protocolVersion int, timeout time.Duratio
 
 	reader := bufio.NewReader(conn)
 
-	// Read and discard the length of the incoming packet
+	// Read and discard the length of the incoming packet.
 	_, err = binary.ReadUvarint(reader)
 	if err != nil {
 		return resp, err
 	}
 
-	// Read the packet ID and validate it as 0, the Response packet)
+	// Read the packet ID and validate it as 0.
 	packetId, err := binary.ReadUvarint(reader)
 	if err != nil {
 		return resp, err

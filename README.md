@@ -1,4 +1,4 @@
-# go-minecraftping
+# go-minecraftping [![Go Report Card](https://goreportcard.com/badge/github.com/Cryptkeeper/go-minecraftping)](https://goreportcard.com/report/github.com/Cryptkeeper/go-minecraftping) [![GoDoc](https://godoc.org/github.com/Cryptkeeper/go-minecraftping?status.svg)](https://godoc.org/github.com/Cryptkeeper/go-minecraftping)
 A wrapper for querying [Minecraft Java Edition](https://minecraft.net) servers using the vanilla [Server List Ping](https://wiki.vg/Server_List_Ping) protocol.
 
 ## Usage

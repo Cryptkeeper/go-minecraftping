@@ -14,11 +14,17 @@ import (
 )
 
 const (
+	// DefaultPort is the default Minecraft Java Edition network port.
 	DefaultPort = 25565
 
+	// LatestProtocolVersion is the latest released Minecraft Java Edition protocol version.
 	// More protocol versions: https://wiki.vg/Protocol_version_numbers
 	LatestProtocolVersion = 490
 )
+
+// requestPacket is a cached copy of the Request packet.
+// It contains only it's length (1) and the packet's ID (0).
+var requestPacket = []byte{1, 0}
 
 type Response struct {
 	Version struct {
@@ -57,8 +63,7 @@ func Ping(address string, port uint16, protocolVersion int, timeout time.Duratio
 	handshake := makeHandshakePacket(address, port, protocolVersion)
 	conn.Write(handshake)
 
-	request := makeRequestPacket()
-	conn.Write(request)
+	conn.Write(requestPacket)
 
 	reader := bufio.NewReader(conn)
 
@@ -104,28 +109,17 @@ func makeHandshakePacket(address string, port uint16, protocolVersion int) []byt
 	putVarInt(&buf, int32(len(address)))
 	buf.WriteString(address)
 
-	portBuffer := make([]byte, 2)
-	binary.BigEndian.PutUint16(portBuffer, port)
-	buf.Write(portBuffer)
+	binary.Write(&buf, binary.BigEndian, port)
 
 	putVarInt(&buf, 1)
 
 	// Prepend the buffer with it's length as a uvarint
 	var out bytes.Buffer
 
-	// Pre-grow to prevent wasted resizes
-	out.Grow(buf.Len())
-
 	putVarInt(&out, int32(buf.Len()))
 	out.Write(buf.Bytes())
 
 	return out.Bytes()
-}
-
-func makeRequestPacket() []byte {
-	// The Request packet is only its length (1) and its ID (0)
-	// Wrap this directly as a []byte since anything more complex is wasteful
-	return []byte{1, 0}
 }
 
 // Allocate a []byte buffer of binary.MaxVarintlen32 and write value as a uvarint32. Trim and write to buf.

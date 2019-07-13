@@ -32,7 +32,7 @@ func main() {
 Minecraft's latest protocol version is available as a const (```minecraftping.LatestProtocolVersion```) to help reduce magic numbers in basic usages of the library.
 
 ### Response
-The response structure is described in [```minecraftping.Response```](https://github.com/Cryptkeeper/go-minecraftping/blob/master/minecraftping.go#L23)
+The response structure is described in [```minecraftping.Response```](https://github.com/Cryptkeeper/go-minecraftping/blob/master/minecraftping.go#L29)
 
 ## Compatibility
 1. This does not support Minecraft's [legacy ping protocol](https://wiki.vg/Server_List_Ping#1.6) for pre-Minecraft version 1.6 servers.

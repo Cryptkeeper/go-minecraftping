@@ -18,6 +18,8 @@ const (
 	DefaultPort = 25565
 
 	// LatestProtocolVersion is the latest released Minecraft Java Edition protocol version.
+	// This field is manually updated and may be out of date.
+	// Corresponding Minecraft version: 1.14.4
 	// More protocol versions: https://wiki.vg/Protocol_version_numbers
 	LatestProtocolVersion = 490
 )

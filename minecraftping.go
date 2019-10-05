@@ -21,7 +21,7 @@ const (
 	// This field is manually updated and may be out of date.
 	// Corresponding Minecraft version: 1.14.4
 	// More protocol versions: https://wiki.vg/Protocol_version_numbers
-	LatestProtocolVersion = 490
+	LatestProtocolVersion = 498
 )
 
 // requestPacket is a cached copy of the Request packet.

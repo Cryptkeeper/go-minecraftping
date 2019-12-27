@@ -13,16 +13,8 @@ import (
 	"time"
 )
 
-const (
-	// DefaultPort is the default Minecraft Java Edition network port.
-	DefaultPort = 25565
-
-	// LatestProtocolVersion is the latest released Minecraft Java Edition protocol version.
-	// This field is manually updated and may be out of date.
-	// Corresponding Minecraft version: 1.15.1
-	// More protocol versions: https://wiki.vg/Protocol_version_numbers
-	LatestProtocolVersion = 575
-)
+// DefaultPort is the default Minecraft Java Edition network port.
+const DefaultPort = 25565
 
 // requestPacket is a cached copy of the Request packet.
 // It contains only it's length (1) and the packet's ID (0).

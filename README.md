@@ -17,6 +17,7 @@ import (
 )
 
 func main() {
+	var protocolVersion = 575 // Minecraft Java Edition 1.15.1
 	resp, err := minecraftping.Ping("myip", 25565, protocolVersion, time.Second * 5)
 	if err != nil {
 		log.Fatal(err)
@@ -28,8 +29,6 @@ func main() {
 (The default Minecraft port, 25565, is also available as a const, ```minecraftping.DefaultPort```.)
 
 ```protocolVersion``` is ever changing as Minecraft updates. See [protocol version numbers](https://wiki.vg/Protocol_version_numbers) for a complete and updated listing. If the server compatible with the sent protocol version, the server will reply with the same protocol version in the ```Response``` object, otherwise it will send its required protocol version (keep in mind, some servers may be compatible with _multiple_ protocol versions.)
-
-Minecraft's latest protocol version is available as a const (```minecraftping.LatestProtocolVersion```) to help reduce magic numbers in basic usages of the library.
 
 ### Response
 The response structure is described in [```minecraftping.Response```](https://github.com/Cryptkeeper/go-minecraftping/blob/master/minecraftping.go#L29)
